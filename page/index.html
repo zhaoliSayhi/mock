@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>我是赵力</div>
+</body>
+
+<script src="http://mockjs.com/dist/mock.js"></script>
+<script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+	// 使用 Mock
+	 
+		// 登陆	
+		Mock.mock('http:pos/user', 'post', function(options) {
+		    return {
+		    	data: {
+		    		status: 'OK',
+		    		token: 'a18cn2399vv'
+		    	}
+		    }
+		})
+		$.ajax({
+		    url: 'http:pos/user',
+		    data: {user: 'zhaoli', pass: '123456'},
+		    type: 'post',
+		    dataType: 'json'
+		}).done(function (data, status, jqXHR) {
+				console.log(JSON.stringify(data))
+		})
+
+		// list
+		Mock.mock(/\.json/, 'get', {
+		  "array|10": [
+		    {
+		    	"item": {
+		    		'id|10': 10,
+		    		'name': 'zhaoli'
+		    	}
+		    }
+		  ]
+		})
+		$.ajax({
+		    url: 'hello.json',
+		    type: 'get',
+		    dataType: 'json'
+		}).done(function (data, status, jqXHR) {
+		    $('<pre>').text(JSON.stringify(data, null, 4))
+		        .appendTo('body')
+		})
+		
+</script>
+</html>
